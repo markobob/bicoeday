@@ -1,0 +1,18 @@
+<div class="container">
+  <div *ngFor="let note of notesData">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-subtitle>{{
+          note.createdDate.seconds * 1000 | date: 'dd/MM/yyyy hh:mm a'
+        }}</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <div [innerHTML]="note.contents"></div>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-raised-button (click)="onDeleteNote(note.noteId)">Delete</button>
+      </mat-card-actions>
+    </mat-card>
+    <br />
+  </div>
+</div>

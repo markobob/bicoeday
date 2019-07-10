@@ -1,0 +1,44 @@
+:host{
+    margin-top: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn{
+    float:left;
+    margin:10px;
+    cursor: pointer;
+}
+
+.btn:hover{
+    color:#fff;
+}
+
+h1{
+    position: fixed;
+    font-weight: 100;
+    top: 0px;
+    left: 5px;
+    text-shadow: 0 0 8px #1AFFFF;
+    font-family: 'Roboto', sans-serif;
+    letter-spacing: .8rem;
+}
+
+h2 {
+    position: fixed;
+    font-weight: 100;
+    bottom: 5px;
+    text-shadow: 0 0 8px #1AFFFF;
+    font-family: 'Roboto', sans-serif;
+    letter-spacing: .5rem;
+    font-size: .9rem;
+    text-align: right;
+    right: 5px;
+    width: 60%;
+    strong {
+        text-shadow: 0 0 2px #1AFFFF;
+        font-weight: 300;
+        font-size: 1rem;
+    }
+}

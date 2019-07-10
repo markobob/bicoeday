@@ -1,1 +1,35 @@
+
 /* You can add global styles to this file, and also import other style files */
+
+body{
+    margin:0px;
+    background: black;
+    font-family: 'Source Code Pro', monospace;
+    color:#1AFFFF;
+    text-shadow: 0 0 3px #1AFFFF;
+    
+}
+
+canvas{
+    
+}
+
+.text-label{
+    text-shadow: 0 0 3px #e74c3c;
+    font-size: 10px;
+}
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: #e7e7e7;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #03AEAD;
+}

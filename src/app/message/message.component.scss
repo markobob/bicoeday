@@ -1,0 +1,22 @@
+.container {
+    margin: 15px;
+    text-align: center;
+}
+
+textarea {
+    background: none;
+    border: 1px solid #03AEAD;
+    color: #03AEAD;
+    font-size: 20px;
+    width: 90%
+}
+
+button {
+    background: none;
+    border: 1px solid #03AEAD;
+    width: 100px;
+    height: 40px;
+    color: #03AEAD;
+    border-radius: 5px;
+    box-shadow: 0 1px 10px rgba(3,174,173,.7);
+}

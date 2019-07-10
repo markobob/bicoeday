@@ -1,0 +1,16 @@
+.container {
+    margin: 15px auto;
+    width: 90%;
+    max-width: 600px;
+    color: #333;
+}
+
+mat-card {
+    background: #fafafa;
+    color: #333;
+    text-shadow: none;
+}
+
+mat-card-actions {
+    text-align: right;
+}
