@@ -22,6 +22,7 @@ export class MessageComponent implements OnInit {
       contents: this.msg
     };
     this.afs.saveNote(newNoteData);
+    this.msg = '';
   }
 
 }
