@@ -76,9 +76,25 @@ export class Vis3dComponent implements OnInit {
   }
 
   processNotes(data) {
+    let linelength = 6;
     console.log(data);
     data.forEach((d, i) => {
       const tgt = {idx: Math.round(Math.random() * 12000), msg: data[i]['contents'], id: data[i]['noteId']};
+      const msgArr = data[i]['contents'].replace(/(\r\n|\n|\r)/gm," ").split(' ');
+      console.log(msgArr)
+      let msgArrSplit = [];
+      if (msgArr.length > linelength - 1) {
+        for(let i = 0; i < 20; i++) {
+          if (msgArr.length > linelength - 1) {
+            msgArrSplit.push(msgArr.splice(0, linelength))
+          }
+        };
+      } else {
+        msgArrSplit.push(msgArr);
+      }
+      msgArrSplit.forEach(s => { s = s.join(' ') });
+      tgt.msg = msgArrSplit;
+      console.log(msgArrSplit);
       if ( !this.data.targets.find(f => f.msg === tgt.msg) && i < 20 ) {
         this.data.targets.push(tgt);
         this.target(tgt);
@@ -264,24 +280,30 @@ target(t) {
   );
 
   // text3d
-  this.fontloader.load( '../../assets/fonts/SourceCodeProMedium_Regular.json', ( font ) => {
+    this.fontloader.load( '../../assets/fonts/SourceCodeProMedium_Regular.json', ( font ) => {
+      let txtGrp = new THREE.Group();
+      console.log(t)
+      t.msg.forEach((m, i) => {
+  
+        const txt = new THREE.TextGeometry( m, {
+          font: font,
+          size: 16,
+          height: 2,
+          curveSegments: 12,
+          bevelEnabled: false,
+        } );
 
-    const txt = new THREE.TextGeometry( t.msg, {
-      font: font,
-      size: 16,
-      height: 2,
-      curveSegments: 12,
-      bevelEnabled: false,
-    } );
-
-    const txtmaterials = new THREE.MeshBasicMaterial({color: 0xe74c3c});
-    const textMesh = new THREE.Mesh( txt, txtmaterials );
+        const txtmaterials = new THREE.MeshBasicMaterial({color: 0xe74c3c});
+        const textMesh = new THREE.Mesh( txt, txtmaterials );
+        textMesh.position.y = (t.msg.length - 1- i) * 18;
+        txtGrp.add(textMesh);
+      })
 
   // obj
   const target_obj = {
     line: new THREE.Line( line_geometry, line_material ),
     circle: new THREE.Line(cirlce_geometry, cirlce_material),
-    text: textMesh,
+    text: txtGrp,
     id: t.id
   };
 
@@ -304,7 +326,7 @@ target(t) {
   target_obj.text.position.x = trg[0];
   target_obj.text.position.y = trg[1];
   target_obj.text.position.z = trg[2];
-  target_obj.text.scale.set(0, 0, 0);
+  target_obj.text.scale.set(0.0001, 0.0001, 0.0001);
   window.setInterval(d => { target_obj.text.scale.set(1, 1, 1); }, 2000);
 
   target_obj.line.geometry.vertices[0].x = trg[0];
