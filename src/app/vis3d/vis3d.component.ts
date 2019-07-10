@@ -64,7 +64,7 @@ export class Vis3dComponent implements OnInit {
       const r = Math.round(Math.random() * 4);
       if (r <= 2) { this.data.posData_model(this.dataSource); }
        else if (r === 3) { this.data.posData_random(this.dataSource); }
-       else if ( r === 4) { this.data.posData_control(this.dataSource); }
+       else if ( r === 4) { this.data.posData_model(this.dataSource); }
     }, 42000);
 
   }
