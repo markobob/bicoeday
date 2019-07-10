@@ -36,7 +36,6 @@ export class DataService {
 
   getHeart(ds) {
     d3.json('../assets/models/heart.json').then(d => {
-      console.log(d);
       this.model_heart = d.data.attributes.position.array;
       for (let i = 0; i < this.model_heart.length; i++) {
         this.model_heart[i] *= this.scale;
@@ -54,7 +53,6 @@ export class DataService {
     this.modules[ds].data.forEach((d, i) => {
       if ( Number.isInteger(i / c) ) {b = i / c; }
       a = (i - (b * c)) * 3;
-      // console.log(a,b,c,i)
       createjs.Tween.get(d.pos).to([
         this.model_heart[a],
         this.model_heart[(a) + 1],

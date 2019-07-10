@@ -56,13 +56,11 @@ export class Vis3dComponent implements OnInit {
     this.height = document.getElementById('canvas3d').clientHeight - 150;
     this.data.getHeart(null);
     this.data.heartRecieved.subscribe(d => {
-      console.log('data recieved ', d);
       this.init();
 
     });
 
     window.setInterval(d => {
-      console.log('hello');
       const r = Math.round(Math.random() * 4);
       if (r <= 2) { this.data.posData_model(this.dataSource); }
        else if (r === 3) { this.data.posData_random(this.dataSource); }
@@ -76,34 +74,31 @@ export class Vis3dComponent implements OnInit {
   }
 
   processNotes(data) {
-    let linelength = 6;
-    console.log(data);
+    const linelength = 7;
     data.forEach((d, i) => {
-      const tgt = {idx: Math.round(Math.random() * 12000), msg: data[i]['contents'], id: data[i]['noteId']};
+      const tgt = {idx: Math.round(Math.random() * 12000), msgCheck: data[i]['contents'], id: data[i]['noteId'], msg: []};
       const msgArr = data[i]['contents'].replace(/(\r\n|\n|\r)/gm," ").split(' ');
-      console.log(msgArr)
-      let msgArrSplit = [];
+      const msgArrSplit = [];
       if (msgArr.length > linelength - 1) {
         for(let i = 0; i < 20; i++) {
           if (msgArr.length > linelength - 1) {
-            msgArrSplit.push(msgArr.splice(0, linelength))
+            msgArrSplit.push(msgArr.splice(0, linelength));
           }
         };
       } else {
         msgArrSplit.push(msgArr);
       }
-      msgArrSplit.forEach(s => { s = s.join(' ') });
-      tgt.msg = msgArrSplit;
-      console.log(msgArrSplit);
-      if ( !this.data.targets.find(f => f.msg === tgt.msg) && i < 20 ) {
+      let msgArrJoin = [];
+      msgArrSplit.forEach(s => { msgArrJoin.push(s.join(' ')); });
+      tgt.msg = msgArrJoin;
+      if ( !this.data.targets.find(f => f.msgCheck === tgt.msgCheck) && i < 20 ) {
         this.data.targets.push(tgt);
         this.target(tgt);
       }
     });
 
     this.data.targets.forEach((t, i) => {
-      if (!data.find(f => f.contents === t.msg)) {
-        console.log(t);
+      if (!data.find(f => f.contents === t.msgCheck)) {
         this.data.targets.splice(i, 1);
         this.removeTarget(t);
       }
@@ -160,14 +155,12 @@ export class Vis3dComponent implements OnInit {
       render();
     }
     const clock = new THREE.Clock();
-    console.log(this.dataSource);
     function render() {
       const delta = clock.getDelta();
       const time = Date.now() * 0.005;
 
       if (self.data.modules[self.dataSource].rot_speed === 0) {
         self.particleSystem.rotation.y = 0;
-        // console.log(self.dataSource)
       } else {
         self.particleSystem.rotation.y += self.data.modules[self.dataSource].rot_speed;
       }
@@ -227,8 +220,7 @@ export class Vis3dComponent implements OnInit {
     this.data.targets.forEach(t => {
       this.target(t);
     });
-    console.log(this.particleSystem);
-
+  
   }
 
   resize(w, h) {
@@ -243,7 +235,6 @@ export class Vis3dComponent implements OnInit {
 }
 
 removeTarget(t) {
-  console.log(t);
   const selectedObject_l = this.scene.getObjectByName('line_' + t.id);
   this.particleSystem.remove( selectedObject_l );
   const selectedObject_c = this.scene.getObjectByName('circle_' + t.id);
@@ -282,7 +273,6 @@ target(t) {
   // text3d
     this.fontloader.load( '../../assets/fonts/SourceCodeProMedium_Regular.json', ( font ) => {
       let txtGrp = new THREE.Group();
-      console.log(t)
       t.msg.forEach((m, i) => {
   
         const txt = new THREE.TextGeometry( m, {
@@ -371,7 +361,6 @@ _createTextLabel() {
     },
     setParent: function(threejsobj) {
       this.parent = threejsobj;
-      console.log(threejsobj);
     },
     updatePosition: function() {
       if (parent) {
@@ -379,8 +368,6 @@ _createTextLabel() {
       }
 
       const coords2d = this.get2DCoords(this.position, self.camera);
-      console.log(this.position);
-      console.log( self.particleSystem.getWorldPosition(this.position) );
       // tslint:disable-next-line:max-line-length
       this.element.style.left = coords2d.x < document.getElementById('canvas3d').offsetWidth / 2 ? (coords2d.x - this.element.offsetWidth + 'px') : (coords2d.x + 'px');
       this.element.style.top = (coords2d.y + 'px');

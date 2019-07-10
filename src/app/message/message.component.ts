@@ -16,7 +16,6 @@ export class MessageComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.msg);
     const newNoteData = {
       title: 'Test note',
       contents: this.msg

@@ -28,7 +28,6 @@ export class AdminComponent implements OnInit {
       )
     )
     .subscribe(data => {
-      console.log(data);
       this.notesData = data;
     });
   }

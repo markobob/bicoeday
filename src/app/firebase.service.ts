@@ -17,7 +17,6 @@ export class FirebaseService {
   }
 
   saveNote(nodeData) {
-    console.log('adding note:', nodeData);
     const batch = this.afs.firestore.batch();
     const newNoteId = this.afs.createId();
 
